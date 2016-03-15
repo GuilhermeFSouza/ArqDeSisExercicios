@@ -58,7 +58,7 @@ public class Extrato {
 		ExtratoDAO extratoDAO = new ExtratoDAO();
 		ArrayList<ExtratoTO> resultExtrato = new ArrayList<>();
 		try {
-			resultExtrato =extratoDAO.carregarDados(conn, numConta, data);
+			resultExtrato = extratoDAO.carregarDados(conn, numConta, data);
 			for (ExtratoTO extratoTO : resultExtrato) {
 				Extrato ext = new Extrato();
 				ext.setIdMovimento(extratoTO.getIdMovimento());

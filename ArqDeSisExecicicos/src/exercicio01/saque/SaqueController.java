@@ -12,20 +12,20 @@ import javax.swing.JOptionPane;
 import exercicio01.saque.beans.Conta;
 
 import exercicio01.saque.ConexaoBD;
-import exercicio01.saque.Log;
-import exercicio01.saque.Notas;
+//import exercicio01.saque.Log;
+//import exercicio01.saque.Notas;
 import exercicio01.saque.Saque;
 
 public class SaqueController implements ActionListener{
 	private Conta conta;
 	private Saque saque;
-	private Notas notas;
+	//private Notas notas;
 	public ResourceBundle bundleParam;
-	public Log log;
+	//public Log log;
 	public SaqueController(ResourceBundle bundleParam,final Conta conta) {
 		super();
 		this.conta = conta;
-		this.notas = new Notas();
+		//this.notas = new Notas();
 		this.bundleParam = bundleParam;
 	}
 
@@ -57,7 +57,7 @@ public class SaqueController implements ActionListener{
 			// *** For�a o uso de transa��o.
 			conn.setAutoCommit(false);
 			int opcao = JOptionPane.showOptionDialog(null, bundleParam.getString("tela.realizarSaque.confirma"), bundleParam.getString("tela.realizarSaque.titulo"),JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, mensagens, mensagens[1]);
-			if (opcao == 0) {
+			/*if (opcao == 0) {
 				try {
 					Calendar cData= Calendar.getInstance();
 					String data = String.format("%tF", cData);
@@ -130,7 +130,7 @@ public class SaqueController implements ActionListener{
 				JOptionPane.showMessageDialog(null, bundleParam.getString("tela.realizarSaque.cancela") + "teste1");
 				throw new Exception();
 			}
-
+	*/
 		}catch(Exception e1){
 			JOptionPane.showMessageDialog(null,bundleParam.getString("tela.realizarSaque.concela") + " " +
 					bundleParam.getString("tela.gerarCodigo.buttonCod") + " " +

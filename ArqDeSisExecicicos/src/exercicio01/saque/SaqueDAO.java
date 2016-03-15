@@ -7,25 +7,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SaqueDAO {
-	public void inserirMovimento(Connection conn, int tipoMovimento, double valor, int numConta, int numAgencia, int numBanco, String data) throws SQLException{
+	public void inserirMovimento(SaqueTO saqueTO) throws SQLException{
 		PreparedStatement stm = null;
 		String sqlInsert = new StringBuilder()
 		.append("insert into movimento values(0,?,?,?,?,?,?)").toString();
 
 		try {
-			stm = conn.prepareStatement(sqlInsert);
-			stm.setInt(1, tipoMovimento);
-			stm.setDouble(2, valor);
-			stm.setInt(3, numConta);
-			stm.setInt(4, numAgencia);
-			stm.setInt(5, numBanco);
-			stm.setDate(6, Date.valueOf(data));
+			stm = saqueTO.getConn().prepareStatement(sqlInsert);
+			stm.setInt   (1, saqueTO.getTipoMovimento());
+			stm.setDouble(2, saqueTO.getValor());
+			stm.setInt   (3, saqueTO.getNumConta());
+			stm.setInt   (4, saqueTO.getNumAgencia());
+			stm.setInt   (5, saqueTO.getNumBanco());
+			stm.setDate  (6, Date.valueOf(saqueTO.getData()));
 			stm.execute();
 		} catch (SQLException e) {
 			throw e;
 		}
 	}
-	public int consultaMovimento(Connection conn,double valor,int numConta, int numAgencia, int numBanco) throws SQLException{
+	public int consultaMovimento(SaqueTO saqueTO) throws SQLException{
 		int idMovimento = 0;
 		PreparedStatement stm = null;
 		String sqlSelect = new StringBuilder()
@@ -37,11 +37,11 @@ public class SaqueDAO {
 		.append("   and valor = ?         ").toString();
 
 		try {
-			stm = conn.prepareStatement(sqlSelect);
-			stm.setInt(1, numConta);
-			stm.setInt(2, numAgencia);
-			stm.setInt(3, numBanco);
-			stm.setDouble(4, valor);
+			stm = saqueTO.getConn().prepareStatement(sqlSelect);
+			stm.setInt   (1, saqueTO.getNumConta());
+			stm.setInt   (2, saqueTO.getNumAgencia());
+			stm.setInt   (3, saqueTO.getNumBanco());
+			stm.setDouble(4, saqueTO.getValor());
 
 			ResultSet rs = stm.executeQuery();
 			if (rs.next()) idMovimento = rs.getInt(1);
@@ -66,23 +66,23 @@ public class SaqueDAO {
 			throw e;
 		}
 	}
-	public void insertOperacao(Connection conn, int tipoMovimento, String data, int quantidade) throws SQLException{
+	public void insertOperacao(SaqueTO saqueTO) throws SQLException{
 		PreparedStatement stm = null;
 		String sqlInsert = new StringBuilder()
 		.append("insert into operacao values(?,?,?)").toString();
 
 		try {
-			stm = conn.prepareStatement(sqlInsert);
-			stm.setInt(1, tipoMovimento);
-			stm.setDate(2, Date.valueOf(data));
-			stm.setInt(3, quantidade);
+			stm = saqueTO.getConn().prepareStatement(sqlInsert);
+			stm.setInt (1, saqueTO.getTipoMovimento());
+			stm.setDate(2, Date.valueOf(saqueTO.getData()));
+			stm.setInt (3, saqueTO.getQuantidade());
 			stm.execute();
 
 		} catch (SQLException e) {
 			throw e;
 		}
 	}
-	public void updateOperacao(Connection conn, int tipoMovimento, String data, int quantidade) throws SQLException{
+	public void updateOperacao(SaqueTO saqueTO) throws SQLException{
 		PreparedStatement stm = null;
 		String sqlUpdate = new StringBuilder()
 		.append("update operacao set quantidade_operacao= ? " +
@@ -90,17 +90,17 @@ public class SaqueDAO {
 				"    and data_operacao= ?                   ").toString();
 
 		try {
-			stm = conn.prepareStatement(sqlUpdate);
-			stm.setInt(1, quantidade);
-			stm.setInt(2,  tipoMovimento);
-			stm.setDate(3, Date.valueOf(data));
+			stm = saqueTO.getConn().prepareStatement(sqlUpdate);
+			stm.setInt (1, saqueTO.getQuantidade());
+			stm.setInt (2,  saqueTO.getTipoMovimento());
+			stm.setDate(3, Date.valueOf(saqueTO.getData()));
 			stm.execute();
 
 		} catch (SQLException e) {
 			throw e;
 		}
 	}
-	public String selectOperacao(Connection conn, int tipoMovimento, String data) throws SQLException{
+	public String selectOperacao(SaqueTO saqueTO) throws SQLException{
 		PreparedStatement stm = null;
 		String dataResult="";
 		String sqlSelect = new StringBuilder()
@@ -109,9 +109,9 @@ public class SaqueDAO {
 				"  where tipo_movimento= ?" +
 				"    and data_operacao= ? ").toString();
 		try {
-			stm = conn.prepareStatement(sqlSelect);
-			stm.setInt(1, tipoMovimento);
-			stm.setDate(2, Date.valueOf(data));
+			stm = saqueTO.getConn().prepareStatement(sqlSelect);
+			stm.setInt (1, saqueTO.getTipoMovimento());
+			stm.setDate(2, Date.valueOf(saqueTO.getData()));
 			ResultSet rs = stm.executeQuery();
 			if (rs.next()) dataResult = String.valueOf(rs.getDate(1));
 
@@ -121,7 +121,7 @@ public class SaqueDAO {
 		}
 		return dataResult;
 	}
-	public int selectQutddOperacao(Connection conn, int tipoMovimento, String data) throws SQLException{
+	public int selectQutddOperacao(SaqueTO saqueTO) throws SQLException{
 		PreparedStatement stm = null;
 		int quantidade=0;
 		String sqlSelectOpr = new StringBuilder()
@@ -130,9 +130,9 @@ public class SaqueDAO {
 				"  where tipo_movimento= ?" +
 				"    and data_operacao= ? ").toString();
 		try {
-			stm = conn.prepareStatement(sqlSelectOpr);
-			stm.setInt(1, tipoMovimento);
-			stm.setDate(2, Date.valueOf(data));
+			stm = saqueTO.getConn().prepareStatement(sqlSelectOpr);
+			stm.setInt (1, saqueTO.getTipoMovimento());
+			stm.setDate(2, Date.valueOf(saqueTO.getData()));
 			ResultSet rs = stm.executeQuery();
 			if (rs.next()) quantidade = rs.getInt(1);
 

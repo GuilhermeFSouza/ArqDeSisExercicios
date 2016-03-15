@@ -29,23 +29,34 @@ public class Saque {
 	}
 	public void inserirSaque(Connection conn, int tipoMovimento, double valor, int numConta, int numAgencia, int numBanco, String data) throws Exception{
 		try {
-			saqueDAO.inserirMovimento(conn, tipoMovimento, valor, numConta, numAgencia, numBanco, data);
-			int id_movimento = saqueDAO.consultaMovimento(conn,valor, numConta, numAgencia, numBanco);
-			saqueDAO.inserirSaque(conn, tipoMovimento, id_movimento);
+			SaqueTO saqueTO = new SaqueTO(conn, tipoMovimento, valor, numConta, numAgencia, numBanco, data);
+			saqueDAO.inserirMovimento(saqueTO);
+			saqueTO.setIdMovimento(saqueDAO.consultaMovimento(saqueTO));
+			saqueDAO.inserirSaque(conn, tipoMovimento, saqueTO.getIdMovimento());
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 	public void insertOperacao(Connection conn, int tipoMovimento, String data, int quantidade) throws SQLException{
 		try {
-			saqueDAO.insertOperacao(conn, tipoMovimento, data, quantidade);
+			SaqueTO saqueTO = new SaqueTO();
+			saqueTO.setConn(conn);
+			saqueTO.setTipoMovimento(tipoMovimento);
+			saqueTO.setData(data);
+			saqueTO.setQuantidade(quantidade);
+			saqueDAO.insertOperacao(saqueTO);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
 	public void updateOperacao(Connection conn, int tipoMovimento, String data, int quantidade) throws SQLException{
 		try {
-			saqueDAO.updateOperacao(conn, tipoMovimento, data, quantidade);
+			SaqueTO saqueTO = new SaqueTO();
+			saqueTO.setConn(conn);
+			saqueTO.setTipoMovimento(tipoMovimento);
+			saqueTO.setData(data);
+			saqueTO.setQuantidade(quantidade);
+			saqueDAO.updateOperacao(saqueTO);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -53,7 +64,11 @@ public class Saque {
 	public String selectOperacao(Connection conn, int tipoMovimento, String dataOpr) throws SQLException{
 		String data = "";
 		try {
-			data = saqueDAO.selectOperacao(conn, tipoMovimento, dataOpr);
+			SaqueTO saqueTO = new SaqueTO();
+			saqueTO.setConn(conn);
+			saqueTO.setTipoMovimento(tipoMovimento);
+			saqueTO.setData(dataOpr);
+			data = saqueDAO.selectOperacao(saqueTO);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -62,7 +77,10 @@ public class Saque {
 	public int selectQutddOperacao(Connection conn, int tipoMovimento, String data) throws SQLException{
 		int quantidade = 0;
 		try {
-			quantidade = saqueDAO.selectQutddOperacao(conn, tipoMovimento, data);
+			SaqueTO saqueTO = new SaqueTO();
+			saqueTO.setTipoMovimento(tipoMovimento);
+			saqueTO.setData(data);
+			quantidade = saqueDAO.selectQutddOperacao(saqueTO);
 		} catch (Exception e) {
 			throw e;
 		}
