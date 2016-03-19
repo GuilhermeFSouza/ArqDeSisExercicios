@@ -1,4 +1,4 @@
-package exercicio01.saque;
+package exercicio02.saque;
 
 import java.sql.Connection;
 import java.sql.Date;

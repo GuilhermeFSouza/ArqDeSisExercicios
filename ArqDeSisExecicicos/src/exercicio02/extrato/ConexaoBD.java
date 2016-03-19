@@ -1,4 +1,4 @@
-package exercicio01.extrato;
+package exercicio02.extrato;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,7 +22,7 @@ public class ConexaoBD{
 
 		}
 	}
-	// Obtém conexão com o banco de dados
+	// Obtï¿½m conexï¿½o com o banco de dados
 	public Connection obtemConexao() throws SQLException{
 
 		return DriverManager.getConnection("jdbc:mysql://localhost/caixaeletronico?user=root&password=412990");

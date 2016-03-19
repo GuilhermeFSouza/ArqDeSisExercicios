@@ -1,9 +1,9 @@
-package exercicio01.saque;
+package exercicio02.saque;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import exercicio01.saque.SaqueDAO;
+import exercicio02.saque.SaqueDAO;
 
 public class Saque {
 	private int tipoMovimento;

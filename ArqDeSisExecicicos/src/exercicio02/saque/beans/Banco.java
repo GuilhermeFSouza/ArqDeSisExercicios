@@ -1,4 +1,4 @@
-package exercicio01.saque.beans;
+package exercicio02.saque.beans;
 
 import java.util.ArrayList;
 import java.util.List;

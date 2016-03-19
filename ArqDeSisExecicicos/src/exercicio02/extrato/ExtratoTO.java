@@ -1,4 +1,4 @@
-package exercicio01.extrato;
+package exercicio02.extrato;
 
 
 public class ExtratoTO {

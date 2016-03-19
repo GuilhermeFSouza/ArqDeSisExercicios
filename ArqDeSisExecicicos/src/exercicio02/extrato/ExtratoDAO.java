@@ -1,4 +1,4 @@
-package exercicio01.extrato;
+package exercicio02.extrato;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
